@@ -64,7 +64,6 @@ void subscription_callback(const void *msgin) {
     digitalWrite(R_BACK, r < 0);
     ledcWrite(pwmChannel1, lPwm);
     ledcWrite(pwmChannel2, rPwm);
-
 }
 
 void setup() {

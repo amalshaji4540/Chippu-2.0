@@ -35,14 +35,14 @@ void setup() {
     ledcAttachPin(enable2Pin1, pwmChannel2);
 
     Serial.begin(9600);
-    float x = max(min(0.0f, 1.0f), -1.0f);
-    float z = max(min(0.0f, 1.0f), -1.0f);
+    float x = max(min( 1.0f, 1.0f), -1.0f);
+    float z = max(min(-1.0f, 1.0f), -1.0f);
 
     float l = (x - z) / 2;
     float r = (x + z) / 2;
 
-    uint16_t lPwm = mapPwm(fabs(l), PWM_MIN, PWMRANGE);
-    uint16_t rPwm = mapPwm(fabs(r), PWM_MIN, PWMRANGE);
+    uint16_t lPwm = map(l,-1,1,181,255);
+    uint16_t rPwm = map(r,-1,1,181,255);
 
     digitalWrite(L_FORW, l > 0);
     digitalWrite(L_BACK, l < 0);
