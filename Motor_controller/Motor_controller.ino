@@ -35,8 +35,8 @@ void setup() {
     ledcAttachPin(enable2Pin1, pwmChannel2);
 
     Serial.begin(9600);
-    float x = max(min(1.0f, 1.0f), -1.0f);
-    float z = max(min(1.0f, 1.0f), -1.0f);
+    float x = max(min(0.0f, 1.0f), -1.0f);
+    float z = max(min(0.0f, 1.0f), -1.0f);
 
     float l = (x - z) / 2;
     float r = (x + z) / 2;
