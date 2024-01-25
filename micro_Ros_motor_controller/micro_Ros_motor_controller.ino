@@ -32,10 +32,10 @@ rcl_timer_t timer;
 #define enable2Pin1 15
 #define enable1Pin1 5
 
-int encoderPin1 = 16; //Encoder Output 'A' must connected with intreput pin of arduino.
-int encoderPin2 = 17; //Encoder Otput 'B' must connected with intreput pin of arduino.
-int encoderPin3 = 18;
-int encoderPin4 = 5;
+int encoderPin1 = 18; //Encoder Output 'A' must connected with intreput pin of arduino.
+int encoderPin2 = 19; //Encoder Otput 'B' must connected with intreput pin of arduino.
+int encoderPin3 = 26;
+int encoderPin4 = 27;
 int lastEncoded_r =0;
 int lastEncoded_l =0;
 
