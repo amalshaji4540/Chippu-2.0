@@ -39,7 +39,6 @@ int encoderPin4 = 27;
 int lastEncoded_r =0;
 int lastEncoded_l =0;
 
-float mapPwm(float x, float out_min, float out_max);
 
 int PWM_MIN =181;
 int PWMRANGE =255;
