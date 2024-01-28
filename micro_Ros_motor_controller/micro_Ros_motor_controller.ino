@@ -36,8 +36,8 @@ int encoderPin1 = 18; //Encoder Output 'A' must connected with intreput pin of a
 int encoderPin2 = 19; //Encoder Otput 'B' must connected with intreput pin of arduino.
 int encoderPin3 = 26;
 int encoderPin4 = 27;
-int lastEncoded_r =0;
-int lastEncoded_l =0;
+volatile long EncoderCount_l=0;
+volatile long EncoderCount_r=0;
 
 
 int PWM_MIN =181;
@@ -95,25 +95,12 @@ void setup() {
     pinMode(L_BACK,OUTPUT);
     pinMode(R_FORW,OUTPUT);
     pinMode(R_BACK,OUTPUT);
-    pinMode(enable1Pin1,OUTPUT);
-    pinMode(enable2Pin1,OUTPUT);
-
-    digitalWrite(encoderPin1, HIGH); //turn pullup resistor on
-    digitalWrite(encoderPin2, HIGH); //turn pullup resistor on
-
-    pinMode(encoderPin1, INPUT_PULLUP);
-    pinMode(encoderPin2, INPUT_PULLUP);
-
-    attachInterrupt(digitalPinToInterrupt(encoderPin1), updateEncoder_l, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(encoderPin2), updateEncoder_l, CHANGE);
-
-
-     digitalWrite(encoderPin3, HIGH); //turn pullup resistor on
-  digitalWrite(encoderPin4, HIGH); //turn pullup resistor on
-  pinMode(encoderPin3, INPUT_PULLUP); 
-  pinMode(encoderPin4, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(encoderPin3), updateEncoder_r, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(encoderPin4), updateEncoder_r, CHANGE);
+    pinMode(enable1Pin1,INPUT);
+    pinMode(enable2Pin1,INPUT);
+    attachInterrupt(digitalPinToInterrupt(encoderPin1), updateEncoder_l,RISING);
+    pinMode(encoderPin3, INPUT); 
+    pinMode(encoderPin4, INPUT);
+    attachInterrupt(digitalPinToInterrupt(encoderPin3), updateEncoder_r,RISING);
 
 
     ledcSetup(pwmChannel1, freq, resolution);
@@ -157,7 +144,7 @@ void setup() {
     ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int32),
     "right_wheel_tick"));
 
-  const unsigned int timer_timeout = 100;
+  const unsigned int timer_timeout = 500;
   RCCHECK(rclc_timer_init_default(
     &timer,
     &support,
@@ -180,28 +167,29 @@ void loop() {
 }
 
 void updateEncoder_l(){
-  int MSB = digitalRead(encoderPin1); //MSB = most significant bit
-  int LSB = digitalRead(encoderPin2); //LSB = least significant bit
-  int encoded = (MSB << 1) | LSB; //converting the 2 pin value to single number
-  int sum  = (lastEncoded_l << 2) | encoded; //adding it to the previous encoded value
+  if(digitalRead(encoderPin1)>digitalRead(encoderPin2))
+  {
+    EncoderCount_l++;
+  }
+  else
+  {
+    EncoderCount_l--;
+  }
 
-  if(sum == 0b1101 || sum == 0b0100 || sum == 0b0010 || sum == 0b1011) encodervalue_l.data --;
-  if(sum == 0b1110 || sum == 0b0111 || sum == 0b0001 || sum == 0b1000) encodervalue_l.data ++;
-
-  lastEncoded_l = encoded; //store this value for next time
+  encodervalue_l.data =EncoderCount_l;
   
 }
 
 void updateEncoder_r(){
-  int MSB = digitalRead(encoderPin3); //MSB = most significant bit
-  int LSB = digitalRead(encoderPin4); //LSB = least significant bit
-  int encoded = (MSB << 1) | LSB; //converting the 2 pin value to single number
-  int sum  = (lastEncoded_r << 2) | encoded; //adding it to the previous encoded value
+  if(digitalRead(encoderPin3)>digitalRead(encoderPin4))
+  {
+    EncoderCount_r++;
+  }
+  else
+  {
+    EncoderCount_r--;
+  }
 
-  if(sum == 0b1101 || sum == 0b0100 || sum == 0b0010 || sum == 0b1011) encodervalue_r.data --;
-  if(sum == 0b1110 || sum == 0b0111 || sum == 0b0001 || sum == 0b1000) encodervalue_r.data ++;
-
-  lastEncoded_r = encoded; //store this value for next time
-  
+  encodervalue_r.data =EncoderCount_r;
 }
 
