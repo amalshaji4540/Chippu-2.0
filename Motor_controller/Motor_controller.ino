@@ -1,7 +1,7 @@
 #include <math.h>
 
-#define L_FORW 16
-#define L_BACK 17
+#define L_FORW 25
+#define L_BACK 26
 #define R_FORW 32
 #define R_BACK 33
 #define enable2Pin1 15
@@ -35,8 +35,8 @@ void setup() {
     ledcAttachPin(enable2Pin1, pwmChannel2);
 
     Serial.begin(9600);
-    float x = max(min( 1.0f, 1.0f), -1.0f);
-    float z = max(min(-1.0f, 1.0f), -1.0f);
+    float x = max(min(0.5f, 1.0f), -1.0f);
+    float z = max(min(0.0f, 1.0f), -1.0f);
 
     float l = (x - z) / 2;
     float r = (x + z) / 2;
