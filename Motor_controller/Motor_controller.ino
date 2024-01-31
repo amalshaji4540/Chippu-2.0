@@ -1,11 +1,11 @@
 #include <math.h>
 
-#define L_FORW 25
+#define L_FORW 27
 #define L_BACK 26
 #define R_FORW 32
 #define R_BACK 33
 #define enable2Pin1 15
-#define enable1Pin1 5
+#define enable1Pin1 25
 
 float mapPwm(float x, float out_min, float out_max);
 

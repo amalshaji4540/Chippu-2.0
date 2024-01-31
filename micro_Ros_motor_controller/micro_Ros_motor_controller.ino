@@ -25,17 +25,17 @@ rcl_timer_t timer;
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
 
 #include <math.h>
-#define L_FORW 25
+#define L_FORW 27
 #define L_BACK 26
 #define R_FORW 32
 #define R_BACK 33
 #define enable2Pin1 5
-#define enable1Pin1 15
+#define enable1Pin1 25
 
 int encoderPin1 = 18; //Encoder Output 'A' must connected with intreput pin of arduino.
-int encoderPin2 = 19; //Encoder Otput 'B' must connected with intreput pin of arduino.
+int encoderPin2 = 21; //Encoder Otput 'B' must connected with intreput pin of arduino.
 int encoderPin3 = 23;
-int encoderPin4 = 27;
+int encoderPin4 = 15;
 volatile long EncoderCount_l=0;
 volatile long EncoderCount_r=0;
 
