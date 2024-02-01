@@ -27,10 +27,11 @@ rcl_timer_t timer;
 #include <math.h>
 #define L_FORW 27
 #define L_BACK 26
-#define R_FORW 32
-#define R_BACK 33
-#define enable2Pin1 5
+#define R_FORW 33
+#define R_BACK 32
 #define enable1Pin1 25
+#define enable2Pin1 5
+
 
 int encoderPin1 = 18; //Encoder Output 'A' must connected with intreput pin of arduino.
 int encoderPin2 = 21; //Encoder Otput 'B' must connected with intreput pin of arduino.
