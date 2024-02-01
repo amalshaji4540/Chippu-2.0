@@ -24,7 +24,7 @@ float rpmPrev = 0;
 const int freq = 30000;
 const int pwmChannel = 0;
 const int resolution = 8;
-const int tick_per_revolution = 1056;
+const int tick_per_revolution = 1057;
 
 
 void setup() {
@@ -49,11 +49,12 @@ void loop() {
 
   volatile long pos = EncoderCount_l;
   volatile long current_t = millis();
-  float delta = ((float)current_t - prev_t) / 1.0e3;
+  float delta = ((float)current_t - prev_t) / 0.5e3;
   //encoder count per second
   v1 = ((float)pos - prev_p) / delta;
   prev_p = pos;
   prev_t = current_t;
+
   //digital filter for counter
   // v1Filt = 0.854*v1Filt + 0.0728*v1 + 0.0728*v1Prev;
   // v1Prev = v1;
@@ -78,11 +79,11 @@ void loop() {
   // Serial.println(rpmFilt);
   //setpoint (we are creating a square wave)
   // float vt = 15 * (sin(current_t / 1.0e3) > 0);
-  float vt = 50 ;
+  float vt = 10 ;
   //error
   float e = vt - rpmFilt;
   //integral gain
-  float ki=5;
+  float ki=10;
   //integration of error
   eintegral=eintegral+e*delta;
   //derivative gain
@@ -91,9 +92,10 @@ void loop() {
   ederivative=(e-prev_e)/delta;
   prev_e=e;
   //proportional gain
-  float kp =1.8;
+  float kp =5;
   // u is the control output
   float u = (kp * e)+(ki*eintegral)+(kd*ederivative);
+
 
 
   int dir = 1;

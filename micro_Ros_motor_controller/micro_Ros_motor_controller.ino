@@ -6,7 +6,7 @@
 #include <rclc/executor.h>
 #include <geometry_msgs/msg/twist.h>
 #include <std_msgs/msg/int32.h>
-
+// #define RMW_UXRCE_STREAM_HISTORY 2;
 rcl_subscription_t subscriber;
 geometry_msgs__msg__Twist msg;
 rclc_executor_t executor;
