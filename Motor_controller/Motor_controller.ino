@@ -1,10 +1,10 @@
 #include <math.h>
 
-#define L_FORW 27
-#define L_BACK 26
+#define L_FORW 26
+#define L_BACK 27
 #define R_FORW 32
 #define R_BACK 33
-#define enable2Pin1 15
+#define enable2Pin1 5
 #define enable1Pin1 25
 
 float mapPwm(float x, float out_min, float out_max);
@@ -35,26 +35,26 @@ void setup() {
     ledcAttachPin(enable2Pin1, pwmChannel2);
 
     Serial.begin(9600);
-    float x = max(min(0.5f, 1.0f), -1.0f);
-    float z = max(min(0.0f, 1.0f), -1.0f);
+    // float x = max(min(0.5f, 1.0f), -1.0f);
+    // float z = max(min(0.0f, 1.0f), -1.0f);
 
-    float l = (x - z) / 2;
-    float r = (x + z) / 2;
+    // float l = (x - z) / 2;
+    // float r = (x + z) / 2;
 
-    uint16_t lPwm = map(l,-1,1,181,255);
-    uint16_t rPwm = map(r,-1,1,181,255);
+    // uint16_t lPwm = map(l,-1,1,181,255);
+    // uint16_t rPwm = map(r,-1,1,181,255);
 
-    digitalWrite(L_FORW, l > 0);
-    digitalWrite(L_BACK, l < 0);
-    digitalWrite(R_FORW, r > 0);
-    digitalWrite(R_BACK, r < 0);
-    ledcWrite(pwmChannel1, lPwm);
-    ledcWrite(pwmChannel2, rPwm);
+    digitalWrite(L_FORW,HIGH);
+    digitalWrite(L_BACK,LOW);
+    digitalWrite(R_FORW,HIGH);
+    digitalWrite(R_BACK, LOW);
+    ledcWrite(pwmChannel1,188);
+    ledcWrite(pwmChannel2, 188);
 
 
     
-    Serial.println(x);
-    Serial.println(z);
+    // Serial.println(x);
+    // Serial.println(z);
 
 }
 

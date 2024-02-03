@@ -25,23 +25,23 @@ rcl_timer_t timer;
 #define RCSOFTCHECK(fn) { rcl_ret_t temp_rc = fn; if((temp_rc != RCL_RET_OK)){error_loop();}}
 
 #include <math.h>
-#define L_FORW 27
-#define L_BACK 26
-#define R_FORW 33
-#define R_BACK 32
-#define enable1Pin1 25
-#define enable2Pin1 5
+int8_t L_FORW =27;
+int8_t L_BACK =26;
+int8_t R_FORW =33;
+int8_t R_BACK =32;
+int8_t enable1Pin1= 25;
+int8_t enable2Pin1= 5;
 
 
-int encoderPin1 = 18; //Encoder Output 'A' must connected with intreput pin of arduino.
-int encoderPin2 = 21; //Encoder Otput 'B' must connected with intreput pin of arduino.
-int encoderPin3 = 23;
-int encoderPin4 = 15;
+int8_t encoderPin1 = 18; //Encoder Output 'A' must connected with intreput pin of arduino.
+int8_t encoderPin2 = 21; //Encoder Otput 'B' must connected with intreput pin of arduino.
+int8_t encoderPin3 = 23;
+int8_t encoderPin4 = 15;
 volatile long EncoderCount_l=0;
 volatile long EncoderCount_r=0;
 
 
-int PWM_MIN =100;
+int PWM_MIN =150;
 int PWMRANGE =255;
 
   const int freq = 30000;
@@ -56,7 +56,7 @@ void error_loop(){
   }
 }
 
-void timer_callback(rcl_timer_t * timer, int64_t last_call_time)
+void timer_callback(rcl_timer_t* timer, int64_t last_call_time)
 {  
   RCLC_UNUSED(last_call_time);
   if (timer != NULL) {

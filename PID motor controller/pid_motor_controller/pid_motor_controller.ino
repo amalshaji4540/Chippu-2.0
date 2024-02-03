@@ -1,8 +1,8 @@
-#define encoderPin1 18
-#define encoderPin2 21
-#define forward 27
-#define backward 26
-#define enable 25
+#define encoderPin1 23
+#define encoderPin2 15
+#define forward 32
+#define backward 33
+#define enable 5
 
 int pwm = 0;
 volatile long EncoderCount_l;
@@ -49,7 +49,8 @@ void loop() {
 
   volatile long pos = EncoderCount_l;
   volatile long current_t = millis();
-  float delta = ((float)current_t - prev_t) / 0.5e3;
+  float delta = ((float)current_t - prev_t) / 1.0e3;
+  // Serial.println(delta);
   //encoder count per second
   v1 = ((float)pos - prev_p) / delta;
   prev_p = pos;
@@ -66,7 +67,7 @@ void loop() {
   // Serial.println(v1Filt);
   //increase pwm from 0 to 255 in 20 seconds.
   // pwm=255/20*micros()/1.0e6;
-  delay(2);
+  delay(20);
   //count/second to rpm conversion
   float rpm = (v1 / 1056) * 60;
   //rpm filter
@@ -77,9 +78,9 @@ void loop() {
   // Serial.print(",");
   // Serial.print("RPM_f:");
   // Serial.println(rpmFilt);
-  //setpoint (we are creating a square wave)
+  // setpoint (we are creating a square wave)
   // float vt = 15 * (sin(current_t / 1.0e3) > 0);
-  float vt = 10 ;
+  float vt = 10;
   //error
   float e = vt - rpmFilt;
   //integral gain
@@ -92,11 +93,11 @@ void loop() {
   ederivative=(e-prev_e)/delta;
   prev_e=e;
   //proportional gain
-  float kp =5;
+  float kp =1.8;
   // u is the control output
   float u = (kp * e)+(ki*eintegral)+(kd*ederivative);
 
-
+// Serial.println(u);
 
   int dir = 1;
   if (u < 0) {
@@ -137,8 +138,4 @@ void movebase(int dir, int pwm) {
 
   }
 
-  //   Serial.print("pwm:");
-  //   Serial.print(pwm);
-  //   Serial.println();
-  //
 }
