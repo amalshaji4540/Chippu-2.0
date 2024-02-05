@@ -1,3 +1,5 @@
+/*PID controller u*/
+
 //pin declaration
 //Left wheel
 int8_t L_FORW =26;
@@ -13,9 +15,9 @@ int8_t R_encoderPin1 = 23;
 int8_t R_encoderPin2 = 15;
 
 
-float requiredrpm_LW=15;
+float requiredrpm_LW=5;
 int tickPerRevolution_LW=1050;
-float requiredrpm_RW=15;
+float requiredrpm_RW=5;
 int tickPerRevolution_RW=1055;
 int threshold=150;
 
@@ -138,7 +140,7 @@ void setup() {
   ledcAttachPin(leftWheel.Enable, pwmChannelL);
   ledcSetup(pwmChannelR, freq, resolution);
   ledcAttachPin(rightWheel.Enable, pwmChannelR);
-  Serial.begin(9600);
+  
 
 
 

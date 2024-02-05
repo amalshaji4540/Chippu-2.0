@@ -1,3 +1,5 @@
+
+/*Closed loop pid motor speed Controller*/
 #define encoderPin1 23
 #define encoderPin2 15
 #define forward 32
@@ -69,7 +71,8 @@ void loop() {
   // pwm=255/20*micros()/1.0e6;
   delay(20);
   //count/second to rpm conversion
-  float rpm = (v1 / 1056) * 60;
+  float rpm = (v1*60 /1056);
+  Serial.println(rpm);
   //rpm filter
   rpmFilt = 0.854 * rpmFilt + 0.0728 * rpm + 0.0728 * rpmPrev;
   rpmPrev = rpm;
@@ -80,7 +83,7 @@ void loop() {
   // Serial.println(rpmFilt);
   // setpoint (we are creating a square wave)
   // float vt = 15 * (sin(current_t / 1.0e3) > 0);
-  float vt = 10;
+  float vt = 3;
   //error
   float e = vt - rpmFilt;
   //integral gain
@@ -88,7 +91,7 @@ void loop() {
   //integration of error
   eintegral=eintegral+e*delta;
   //derivative gain
-  float kd=0;
+  float kd=0.01;
   //derivative of error
   ederivative=(e-prev_e)/delta;
   prev_e=e;
@@ -103,7 +106,7 @@ void loop() {
   if (u < 0) {
     dir = -1;
   }
-  int pwr =150+(int)fabs(u);
+  int pwr =160+(int)fabs(u);
   if(pwr>255)
   {
     pwr=255;
