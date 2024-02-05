@@ -1,5 +1,5 @@
 
-/*Closed loop pid motor speed Controller*/
+/*Closed loop pid motor speed Controller.*/
 #define encoderPin1 23
 #define encoderPin2 15
 #define forward 32

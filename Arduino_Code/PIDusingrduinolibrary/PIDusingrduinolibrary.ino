@@ -1,4 +1,5 @@
 
+/*Closed loop pid motor controller using Arduino-PID-Library (https://github.com/br3ttb/Arduino-PID-Library)*/
 #include <PID_v1.h>
 #define encoderPin1 23
 #define encoderPin2 15
