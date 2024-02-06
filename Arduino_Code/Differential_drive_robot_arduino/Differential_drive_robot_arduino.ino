@@ -55,7 +55,6 @@ int8_t L_BACK =27;
 int8_t L_enablePin= 25;
 int8_t L_encoderPin1 = 18; //Encoder Output 'A' must connected with intreput pin of arduino.
 int8_t L_encoderPin2 = 21; //Encoder Otput 'B' must connected with intreput pin of arduino.
-//right Wheel pins initialization
 int8_t R_FORW =32;
 int8_t R_BACK =33;
 int8_t R_enablePin= 5;
@@ -82,7 +81,7 @@ class MotorController {
   int8_t Enable;
   int8_t EncoderPinA;
   int8_t EncoderPinB;
-  volatile long EncoderCount ;
+  std_msgs__msg__Int32 EncoderCount;
   volatile long CurrentPosition;
   volatile long PreviousPosition;
   volatile long CurrentTime;
@@ -120,7 +119,7 @@ class MotorController {
   }
 
   float getRpm(){
-    CurrentPosition=EncoderCount;
+    CurrentPosition=EncoderCount.data;
     CurrentTime=millis();
     float delta1=((float) CurrentTime-PreviousTime)/1.0e3;
     float velocity=((float)CurrentPosition-PreviousPosition)/delta1;
@@ -272,15 +271,17 @@ void MotorControll_callback(rcl_timer_t* timer, int64_t last_call_time){
 
 void updateEncoderL() {
     if (digitalRead(leftWheel.EncoderPinB) > digitalRead(leftWheel.EncoderPinA))
-      leftWheel.EncoderCount++;
+      leftWheel.EncoderCount.data++;
     else
-      leftWheel.EncoderCount--;
+      leftWheel.EncoderCount.data--;
+    encodervalue_l=leftWheel.EncoderCount;
   }
 void updateEncoderR() {
     if (digitalRead(rightWheel.EncoderPinA) > digitalRead(rightWheel.EncoderPinB))
-      rightWheel.EncoderCount++;
+      rightWheel.EncoderCount.data++;
     else
-      rightWheel.EncoderCount--;
+      rightWheel.EncoderCount.data--;
+    encodervalue_r=rightWheel.EncoderCount;
   }
 
 
